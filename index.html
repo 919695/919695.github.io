@@ -73,6 +73,8 @@
 
     <li><label>Categories</label></li>
 
+        
+            <li><a href="python.html">python</a></li>
          
 
       </ul>
@@ -94,6 +96,171 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
+			<div class="article">
+                <a class="clearlink" href="14518781716845.html">
+                
+                  <h1>Python实现分布式爬虫</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>最近在做一个项目，涉及到几亿数据的采集和分析，单机采集在内存和宽带遇到了瓶颈，所以尝试实现分布式采集。本文仅做一个简单的分布式采集demo，主要是讲讲实现思路和用到的技术要点。</p>
+
+<p>分布式采集实现的目标是有一台master服务器负责分派及跟踪任务，而worker客户机则可以是若干台，随着业务量的增长可以弹性扩充。（也可以称为master-slave模式）</p>
+
+<h3 id="toc_0">使用Python实现分布式爬虫所依赖到的包如下：</h3>
+
+<ul>
+<li>multiprocessing.managers：进程管理，并可以把进程分布到网络中，实现分布式的核心组件</li>
+<li>Queue：线程安全的队列，用于任务分派和任务跟踪</li>
+<li>threading：多线程操作</li>
+<li>requests：http请求库，API简单，比较好用</li>
+</ul>
+
+<h3 id="toc_1">master服务器代码：</h3>
+
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+__author__ = &#39;Colin&#39;
+ 
+import Queue, time, threading
+from multiprocessing.managers import BaseManager
+ 
+class SpiderManager(BaseManager):
+    pass
+ 
+# 任务分布队列 （工作机获取任务队列的网址进行爬取）
+task_queue = Queue.Queue()
+# 结果接受队列
+result_queue = Queue.Queue()
+ 
+# 将两个队列注册到网络
+SpiderManager.register(&#39;task_queue&#39;, callable=lambda: task_queue)
+SpiderManager.register(&#39;result_queue&#39;, callable=lambda: result_queue)
+ 
+# 设定服务器信息
+manager = SpiderManager(address=(&#39;127.0.0.1&#39;, 3838), authkey=&#39;hellokey&#39;)
+# 启动服务器
+manager.start()
+# 获取网络上的任务队列
+task = manager.task_queue()
+result = manager.result_queue()
+ 
+# 预设运行信息
+start_time = time.time()
+spider_count = 0
+ 
+# 模拟分配任务，每间隔10秒分配100条网址给工作机
+def allot_work(task):
+    while True:
+        x = range(100)
+        for i in x:
+            task.put(&#39;http://www.baidu.com/&#39;)
+        print &#39;任务分配成功，当前任务数：&#39;, task.qsize()
+        # 每间隔1秒分配一次任务
+        time.sleep(3)
+ 
+# 获取工作机任务执行结果
+def get_result(result, start_time, spider_count):
+    while True:
+        if result.empty() == False:
+            r = result.get(timeout=3)
+            spider_count += 1
+            print &#39;{0} 耗时{1} 执行了{2}次爬虫任务&#39;.format(r, time.time() - start_time, spider_count)
+        else:
+            # 如果没有执行结果，休息5秒钟
+            time.sleep(5)
+ 
+print &#39;开始执行任务分配……&#39;
+# 启动任务分配线程
+threading.Thread(target=allot_work, args=(task,)).start()
+ 
+print &#39;开始接收任务执行结果……&#39;
+# 启动任务结果接收线程
+threading.Thread(target=get_result, args=(result, start_time, spider_count)).start()
+</code></pre>
+
+<h3 id="toc_2">worker客户机代码：</h3>
+
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+__author__ = &#39;Colin&#39;
+ 
+import time, Queue, requests, threading, uuid
+from multiprocessing.managers import BaseManager
+ 
+# 创建和服务器一致的SpiderManager
+class SpiderManager(BaseManager):
+    pass
+ 
+# 模拟一个唯一的机器名字用于服务器区分
+host = uuid.uuid4()
+ 
+# 客户端只需要通过名字注册网络上的Queue
+SpiderManager.register(&#39;task_queue&#39;)
+SpiderManager.register(&#39;result_queue&#39;)
+ 
+# 配置服务器信息，和服务器配置保持一致
+server_addr = (&#39;127.0.0.1&#39;, 3838)
+manager = SpiderManager(address=server_addr, authkey=&#39;hellokey&#39;)
+ 
+# 连接服务器
+manager.connect()
+print &#39;服务器连接成功……&#39;
+ 
+# 获取网络上的队列对象
+task = manager.task_queue()
+result = manager.result_queue()
+ 
+# 执行任务，并把任务执行结果返回给服务器
+def do_work(task, result):
+    while True:
+        try:
+            if task.empty() == False:
+                # 获取任务
+                url = task.get()
+                print &#39;获取任务成功，当前任务数：&#39;,task.qsize()
+                # 爬取网页
+                html = requests.get(url)
+                # 将执行结果返回给服务器
+                r_str = &#39;host:{0} &amp; status_code:{1}&#39;.format(host, html.status_code)
+                print r_str
+                result.put(r_str)
+            else:
+                # 如果没有接受到任务则休眠5秒
+                time.sleep(5)
+        except Exception as e:
+            r_str = &#39;host:{0} &amp; error:{1}&#39;.format(host, e.message)
+            print(r_str)
+            result.put(r_str)
+ 
+print &#39;开始执行任务……&#39;
+threading.Thread(target=do_work, args=(task, result)).start()
+</code></pre>
+
+<p>到这里一个简易的分布式爬虫系统就实现了，一台服务器运行manager.py，N台服务器运行worker.py即可，每启动一台worker会自动注册到manager，也就可以弹性扩展了。根据我本机测试，10台worker每秒请求量可达26次（这里是有宽带瓶颈的），需要提高请求量只需要增加更多的worker客户机。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2016/1/4</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='python.html'>python</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
 			<div class="article">
                 <a class="clearlink" href="about.html">
                 
@@ -198,6 +365,8 @@
                 <div class="side-content">
 
       	<p class="cat-list">
+        
+            <a href="python.html"><strong>python</strong></a>
          
         </p>
 
@@ -212,6 +381,12 @@
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="14518781716845.html">Python实现分布式爬虫</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="about.html">关于王科</a>
