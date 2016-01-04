@@ -75,6 +75,8 @@
 
         
             <li><a href="python.html">python</a></li>
+        
+            <li><a href="deploy.html">开发&部署</a></li>
          
 
       </ul>
@@ -97,9 +99,72 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="62.html">
+                
+                  <h1>MAC安装mogodb和redis</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>安装Homebrew，在终端输入命令：<br/>
+<code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/</code></p>
+
+<p>更新Homebrew的package数据库，在终端中输入命令：<br/>
+<code>brew update</code></p>
+
+<p>安装mogodb，在终端输入命令：<br/>
+<code>brew install mogodb</code></p>
+
+<p>安装完成提示如下：</p>
+
+<pre><code class="language-shell">==Downloading https://downloads.sf.net/project/machomebrew/Bottles/mongodb-2.6
+######################################################################## 100.0%
+==&gt; Pouring mongodb-2.6.5.mavericks.bottle.2.tar.gz
+==&gt; Caveats
+To have launchd start mongodb at login:
+ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
+Then to load mongodb now:
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
+Or, if you don’t want/need launchctl, you can just run:
+mongod —config /usr/local/etc/mongod.conf
+</code></pre>
+
+<p>设置开启启动mogodb，复制提示里的命令并在终端输入执行：<br/>
+<code>ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents</code></p>
+
+<p>立即运行mogodb，复制提示里的命令并在终端输入执行：</p>
+
+<p><code>mongod —config /usr/local/etc/mongod.conf</code></p>
+
+<p>mogodb的安装和配置就搞定了，redis的安装和配置方法一致。使用Homebrew安装各种程序真的太方便了。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2016/1/4</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='deploy.html'>开发&部署</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="52.html">
                 
-                  <h1>centos7 安装与配置 redis</h1>
+                  <h1>centos7安装与配置redis</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
@@ -215,6 +280,8 @@ esac
                   
                     <span class="date">2016/1/4</span>
                     <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='deploy.html'>开发&部署</a></span>
           				  
           					    <span class="posted-in"><a href='python.html'>python</a></span>
           				   
@@ -500,6 +567,8 @@ threading.Thread(target=do_work, args=(task, result)).start()
       	<p class="cat-list">
         
             <a href="python.html"><strong>python</strong></a>
+        
+            <a href="deploy.html"><strong>开发&部署</strong></a>
          
         </p>
 
@@ -516,7 +585,13 @@ threading.Thread(target=do_work, args=(task, result)).start()
 	      
 		      
 			      <li class="post">
-			        <a href="52.html">centos7 安装与配置 redis</a>
+			        <a href="62.html">MAC安装mogodb和redis</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="52.html">centos7安装与配置redis</a>
 			      </li>
 		     
 		  

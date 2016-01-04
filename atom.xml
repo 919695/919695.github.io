@@ -4,7 +4,7 @@
   <title><![CDATA[王科的博客]]></title>
   <link href="http://wangke.pw/atom.xml" rel="self"/>
   <link href="http://wangke.pw/"/>
-  <updated>2016-01-04T11:46:25+08:00</updated>
+  <updated>2016-01-04T11:50:49+08:00</updated>
   <id>http://wangke.pw/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -13,7 +13,48 @@
   <generator uri="http://www.mweb.im/">MWeb</generator>
   
   <entry>
-    <title type="html"><![CDATA[centos7 安装与配置 redis]]></title>
+    <title type="html"><![CDATA[MAC安装mogodb和redis]]></title>
+    <link href="http://wangke.pw/62.html"/>
+    <updated>2016-01-04T11:52:38+08:00</updated>
+    <id>http://wangke.pw/62.html</id>
+    <content type="html"><![CDATA[
+<p>安装Homebrew，在终端输入命令：<br/>
+<code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/</code></p>
+
+<p>更新Homebrew的package数据库，在终端中输入命令：<br/>
+<code>brew update</code></p>
+
+<p>安装mogodb，在终端输入命令：<br/>
+<code>brew install mogodb</code></p>
+
+<p>安装完成提示如下：</p>
+
+<pre><code class="language-shell">==Downloading https://downloads.sf.net/project/machomebrew/Bottles/mongodb-2.6
+######################################################################## 100.0%
+==&gt; Pouring mongodb-2.6.5.mavericks.bottle.2.tar.gz
+==&gt; Caveats
+To have launchd start mongodb at login:
+ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
+Then to load mongodb now:
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
+Or, if you don’t want/need launchctl, you can just run:
+mongod —config /usr/local/etc/mongod.conf
+</code></pre>
+
+<p>设置开启启动mogodb，复制提示里的命令并在终端输入执行：<br/>
+<code>ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents</code></p>
+
+<p>立即运行mogodb，复制提示里的命令并在终端输入执行：</p>
+
+<p><code>mongod —config /usr/local/etc/mongod.conf</code></p>
+
+<p>mogodb的安装和配置就搞定了，redis的安装和配置方法一致。使用Homebrew安装各种程序真的太方便了。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[centos7安装与配置redis]]></title>
     <link href="http://wangke.pw/52.html"/>
     <updated>2016-01-04T11:36:52+08:00</updated>
     <id>http://wangke.pw/52.html</id>

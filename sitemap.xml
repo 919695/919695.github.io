@@ -2,7 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>http://wangke.pw/</loc>
-  <lastmod>2016-01-04T11:50:49+08:00</lastmod>
+  <lastmod>2016-01-04T11:55:54+08:00</lastmod>
+</url>
+
+<url>
+  <loc>http://wangke.pw/62.html</loc>
+  <lastmod>2016-01-04T11:52:38+08:00</lastmod>
 </url>
 
 <url>
@@ -21,6 +26,10 @@
 </url>
 
 
+
+<url>
+  <loc>http://wangke.pw/deploy.html</loc>
+</url>
 
 <url>
   <loc>http://wangke.pw/python.html</loc>
