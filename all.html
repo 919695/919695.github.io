@@ -77,6 +77,8 @@
             <li><a href="python.html">python</a></li>
         
             <li><a href="deploy.html">开发&部署</a></li>
+        
+            <li><a href="other.html">杂记</a></li>
          
 
       </ul>
@@ -98,6 +100,231 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
+			<div class="article">
+                <a class="clearlink" href="github1.html">
+                
+                  <h1>不用命令玩转GITHUB（一）</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>对于大部分人开发人员来说可能都比较喜欢通过命令管理在GITHUB的项目，可能这是比较高效的一种方式。但我个人更喜欢使用客户端进行管理（这看脸的世界），我相信也有一小部分人和我有一样的爱好，如果是并且你还不会，那么可以看看我是如何不用命令玩转GITHUB的。</p>
+
+<blockquote>
+<ul>
+<li>本文会假定你是一名开发者并对GIT工作流和GITHUG有简单了解</li>
+<li>如果你需要和本文一起学习并操作，需要有GITHUB账户，如果你还没有请到<a href="https://github.com/join">GITHUB官网</a>注册。</li>
+<li>本文将会演示一个团队协作的完整流程</li>
+</ul>
+</blockquote>
+
+<h3 id="toc_0">Step1. 创建仓库（项目）</h3>
+
+<ol>
+<li><p>访问GITHUB并登录你的账号，登录成功后在页面右上角点击<code>+</code>创建一个仓库<br/>
+<img src="media/14518875094817/14518921569515.jpg" alt=""/></p></li>
+<li><p>填写信息，并确认创建仓库<br/>
+<img src="media/14518875094817/14518917791060.jpg" alt=""/></p></li>
+</ol>
+
+<p>图解说明：</p>
+
+<blockquote>
+<ol>
+<li>仓库名即项目名（GITHUB的一个仓库就代表我们的一个项目）</li>
+<li>仓库描述</li>
+<li>选择为公开仓库，私有仓库是收费的。</li>
+<li>自动创建README文件，创建成功后可以自由修改</li>
+<li>创建过滤文件（这很重要，因为往往我们需要过滤一些IDE的配置文件，敏感文文件，或则测试数据等等），根据实际情况设定，本文不需要设定</li>
+<li>创建开源协议，根据你的项目设定，本文不需要设定</li>
+<li>确认创建仓库</li>
+</ol>
+</blockquote>
+
+<p>仓库创建成功后回自动跳转到仓库页面，同时会看到GITHUB帮我们自动创建的README文件。</p>
+
+<h3 id="toc_1">Step.2 添加团队成员</h3>
+
+<p><img src="media/14518875094817/14518925426722.jpg" alt=""/></p>
+
+<p>图解说明：</p>
+
+<blockquote>
+<ol>
+<li>点击Settings链接</li>
+<li>点击Collaborators链接</li>
+<li>输入团队成员GITHUB账号，如果没有就先注册</li>
+<li>确定添加成员</li>
+</ol>
+</blockquote>
+
+<p>成员添加成功后，就可以开始享受协同开发了。同时该成员会受到GITHUB的通知邮件，并且可以通过客户端clone这个仓库了，那么如何通过客户端进行仓库clone呢，接着往下看。</p>
+
+<h3 id="toc_2">Step3. 安装GITHUB客户端</h3>
+
+<p>在GITHUB桌面版官网<a href="https://desktop.github.com/">https://desktop.github.com/</a>下载适合你操作系统的客户端，我自己用的是MAC OS，而在后面的教程中，还会用WIN7虚拟机配合演示。安装过程非常简单，这里就不赘述了。<br/>
+安装完成后启动GITHUB客户端会提示登录，输入你的GITHUB账号和密码登录即可。</p>
+
+<h3 id="toc_3">Step3. 克隆GITHUB账户中的仓库</h3>
+
+<p>启动并登录GITHUB客户端后，点击客户端左上角<code>+</code>会提示3个选项，分别是Add、Create、Clone，Add是指添加一个本地的GIT仓库到GITHUB客户端，Create是指创建一个新的GIT仓库，Clone是指从GITHUB账户中克隆项目到本地，我们选择Clone。<br/>
+<img src="media/14518875094817/14518935495973.jpg" alt=""/></p>
+
+<p>确定Clone后，GITHUB会提示选择一个本地目录，根据实际选择后确定即可。</p>
+
+<h3 id="toc_4">Step4. 创建和提交版本</h3>
+
+<ol>
+<li><p>在GITHUG客户端左侧仓库列表选择我们刚刚Clone的仓库playgit，并右键单击，再选择<code>Open in Finder</code>，接下来就可以自由的在这个目录下创建或修改的任意文件了。<br/>
+<img src="media/14518875094817/14518943073485.jpg" alt=""/></p></li>
+<li><p>修改README.md文件如下：</p>
+
+<blockquote>
+<p># playgit<br/>
+不使用命令玩转GITHUB的演示项目<br/>
+GITHUB是一个很棒的平台</p>
+</blockquote></li>
+<li><p>回到GITHUB客户端，就会看到变更的内容，确认本次变更无误我们就可以填写总结进行版本提交了。<br/>
+<img src="media/14518875094817/14519047191127.jpg" alt=""/></p></li>
+</ol>
+
+<p>图解说明：</p>
+
+<blockquote>
+<ol>
+<li>如果不在变更视图，则需要切回到变更视图</li>
+<li>变更文件列表，选择文件客户端右侧就会显示文件内容</li>
+<li>白色区块表示文件的原内容，绿色区块表示文件新增内容</li>
+<li>填写本次版本变更总结</li>
+<li>进行更详细的说明（如果有必要）</li>
+<li>提交并同步到主分支（我们这里还没有其他分支）</li>
+<li>以上操作都是本地的，在本地进行代码测试都OK后，点击Sync同步按钮就会将本地仓库同步到GITHUB平台。</li>
+</ol>
+</blockquote>
+
+<ol>
+<li>同步后我们登录到GITHUB，就可以看到REAADME文件和我们本地的修改同步了
+<img src="media/14518875094817/14518954047560.jpg" alt=""/></li>
+</ol>
+
+<h3 id="toc_5">Step5. 版本回滚</h3>
+
+<p>通过Step4的方法我们进行几次版本提交来创建多个版本历史<br/>
+<img src="media/14518875094817/14519016621910.jpg" alt=""/></p>
+
+<p>当我们提交了多个版本后，发现有问题，需要回到之前某个版本，那么就需要版本回滚。</p>
+
+<p><img src="media/14518875094817/14519043894301.jpg" alt=""/></p>
+
+<p>图解说明：</p>
+
+<blockquote>
+<ol>
+<li>如果不在历史视图，则需要切换到历史视图</li>
+<li>选择我们要回滚的版本，这里选择第2个版本</li>
+<li>点击齿轮按钮</li>
+<li>点击<code>Revert this Commit</code>菜单</li>
+</ol>
+</blockquote>
+
+<p>版本回滚后会显示Revert <q>XXX</q>团队成员就可以清楚的了解到这个版本是说明来的，并且红色区块显示因为版本回滚减少了什么内容。<br/>
+<img src="media/14518875094817/14519044806194.jpg" alt=""/><br/>
+我们在本地仓库打开README.md文件也可以看到<code>GITHUB是一个非常棒的平台</code>这句话不存在了，因为被回滚了。</p>
+
+<h3 id="toc_6">Step6. 协同工作与解决版本冲突</h3>
+
+<p>前面的操作我们都是自己一个人在进行，现在我们就开始团队协作吧。我在虚拟机（WINDOWS7系统）里也安装了GITHUB客户端，并登录了另外一个wwk1986账户（在Step2添加的团队成员）。<br/>
+点击客户端的<code>+</code>按钮Clone playgit<br/>
+<img src="media/14518875094817/14519051058325.jpg" alt=""/></p>
+
+<p>选择目录后GITHUB客户端很快的为我们同步了playgit仓库<br/>
+<img src="media/14518875094817/14519051781490.jpg" alt=""/><br/>
+可以看到账户919695操作的所有历史版本在wwk1986账户也有了。</p>
+
+<p>现在有个问题出现了，919695和wwk1986在本地同时都做了修改，README.md文件，在同步时到底以谁为准呢？客户端或平台无法做出判断，所以GITHUB为我们提供了便捷的代码审查和合并，也就是我们需要手动去解决冲突。</p>
+
+<p>919695首先提交了版本并同步到了GITHUB<br/>
+<img src="media/14518875094817/14519054911804.jpg" alt=""/></p>
+
+<p>WWK1986随后也再本地编辑了README并提交同步，但客户端提示了文件冲突，需要解决<br/>
+<img src="media/14518875094817/14519057706359.jpg" alt=""/><br/>
+红色区块显示了本次冲突中减少的内容<br/>
+绿色取款显示了本次冲突中增加的内容</p>
+
+<p>而解决冲突的方法很简单，就是我们重新编辑README.md文件，手动删除GITHUB为我们添加的冲突注释，并确定最终完成的版本。这里我选择了把2个人添加的内容都保留<br/>
+冲突内容：<br/>
+```</p>
+
+<h1 id="toc_7">playgit</h1>
+
+<p>不使用命令玩转GITHUB的演示项目</p>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+
+<h1 id="toc_8">我学会了GITHUB客户端操作</h1>
+
+<p>学会了真的很简单。</p>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>origin/master<br/>
+<code><br/>
+修改后的内容：<br/>
+</code></p>
+
+<h1 id="toc_9">playgit</h1>
+
+<p>不使用命令玩转GITHUB的演示项目</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+<p>学会了真的很简单。</p>
+
+<p>我学会了GITHUB客户端操作<br/>
+```<br/>
+修改后保存回到GITHUB客户端看到可以提交版本变更了<br/>
+<img src="media/14518875094817/14519062054765.jpg" alt=""/></p>
+
+<p>既然已经合并了版本，那么我们直接提交这个版本，回到仓库视图，选择刚刚提交的版本，仍然可以看到合并前的冲突内容。（下图是另一次版本冲突）<br/>
+<img src="media/14518875094817/14519069509118.jpg" alt=""/></p>
+
+<p>解决了版本冲突后记得提醒你的队友使用客户端进行一次同步，避免再次版本冲突。</p>
+
+<p>到这里，你已经学会了使用GITHUB客户端和团队进行日常的协同开发，但是往往这还不能满足我们一些大型项目合作，因为一个大型项目往往会存在多个分支版本，那么我们将在下一篇教程介绍，GITHUB的分支操作。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2016/1/4</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='other.html'>杂记</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
 			<div class="article">
                 <a class="clearlink" href="72.html">
                 
@@ -635,6 +862,8 @@ threading.Thread(target=do_work, args=(task, result)).start()
             <a href="python.html"><strong>python</strong></a>
         
             <a href="deploy.html"><strong>开发&部署</strong></a>
+        
+            <a href="other.html"><strong>杂记</strong></a>
          
         </p>
 
@@ -649,6 +878,12 @@ threading.Thread(target=do_work, args=(task, result)).start()
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="github1.html">不用命令玩转GITHUB（一）</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="72.html">centos7安装与配置mongodb</a>
@@ -674,10 +909,6 @@ threading.Thread(target=do_work, args=(task, result)).start()
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="41.html">Python实现分布式爬虫</a>
-			      </li>
-		     
 		   
 		  		</ul>
                 </div>
