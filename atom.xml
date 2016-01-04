@@ -4,7 +4,7 @@
   <title><![CDATA[王科的博客]]></title>
   <link href="http://wangke.pw/atom.xml" rel="self"/>
   <link href="http://wangke.pw/"/>
-  <updated>2016-01-04T11:33:49+08:00</updated>
+  <updated>2016-01-04T11:45:32+08:00</updated>
   <id>http://wangke.pw/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -14,9 +14,9 @@
   
   <entry>
     <title type="html"><![CDATA[centos7 安装与配置 redis]]></title>
-    <link href="http://wangke.pw/14518786127589.html"/>
+    <link href="http://wangke.pw/52.html"/>
     <updated>2016-01-04T11:36:52+08:00</updated>
-    <id>http://wangke.pw/14518786127589.html</id>
+    <id>http://wangke.pw/52.html</id>
     <content type="html"><![CDATA[
 <h3 id="toc_0">一、安装</h3>
 
