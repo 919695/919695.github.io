@@ -99,6 +99,74 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="72.html">
+                
+                  <h1>centos7安装与配置mongodb</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>一如既往的喜欢用yum方式安装程序，mongodb官方也有yum安装的帮助文档：<a href="https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/">https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/</a></p>
+
+<p>官方是全英文的，我这里简单的走一遍安装流程，另外官方文章中有一个2.6和一个3.x的安装包，我推荐2.6，因为市面上的资料几乎都是2.x的，所以避免少坑，还是选2.6就好。</p>
+
+<p>执行命令<br/>
+<code>vim /etc/yum.repos.d/mongodb-org-2.6.repo</code></p>
+
+<h3 id="toc_0">写入以下内容并保存：</h3>
+
+<blockquote>
+<p>[mongodb-org-2.6]<br/>
+name=MongoDB 2.6 Repository<br/>
+baseurl=<a href="http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/">http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/</a><br/>
+gpgcheck=0<br/>
+enabled=1</p>
+</blockquote>
+
+<p>执行命令<br/>
+<code>yum install -y mongodb-org</code></p>
+
+<h3 id="toc_1">等待命令执行完成，就安装完了，接下来使用mongodb：</h3>
+
+<blockquote>
+<p>启动 service mongod start<br/>
+停止 service mongod stop<br/>
+重启 service mongod restart<br/>
+开机启动 chkconfig mongod on</p>
+</blockquote>
+
+<h3 id="toc_2">常用文件位置</h3>
+
+<blockquote>
+<p>配置文件 /etc/mongod.conf<br/>
+数据文件 /var/lib/mongo <br/>
+日志文件 /var/log/mongodb </p>
+</blockquote>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2016/1/4</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='deploy.html'>开发&部署</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="62.html">
                 
                   <h1>MAC安装mogodb和redis</h1>
@@ -282,8 +350,6 @@ esac
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='deploy.html'>开发&部署</a></span>
-          				  
-          					    <span class="posted-in"><a href='python.html'>python</a></span>
           				   
                   </div>
                   <div class="more-right right">
@@ -362,6 +428,12 @@ esac
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="72.html">centos7安装与配置mongodb</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="62.html">MAC安装mogodb和redis</a>

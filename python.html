@@ -99,141 +99,6 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="52.html">
-                
-                  <h1>centos7安装与配置redis</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h3 id="toc_0">一、安装</h3>
-
-<p>命令<code>yum install redis</code>安装很方便</p>
-
-<h3 id="toc_1">二、初始化常用配置</h3>
-
-<p>yum安装后默认配置文件在<code>/etc/redis.conf</code></p>
-
-<p>使用daemon方式运行程序，默认为非daemon方式运行<br/>
-<code>daemonize yes</code></p>
-
-<p>为了速度我挂载了固态硬盘来为redis做持久化，所以要配置下持久化的路径<br/>
-<code>dbfilename dump.rdb</code> #SNAPSHOTTING的文件名<br/>
-<code>dir /opt/data/redis/</code> #SNAPSHOTTING文件的路径</p>
-
-<p>设置为警告日志记录，减少日质量<br/>
-<code>loglevel warning</code></p>
-
-<p>注释掉本地IP绑定，开启外网访问<br/>
-<code># bind 127.0.0.1</code></p>
-
-<p>添加requirepass设置连接密码<br/>
-<code>requirepass ***（你的密码）</code></p>
-
-<h3 id="toc_2">三、编写启动脚本</h3>
-
-<p>输入命令<br/>
-<code>vim /etc/init.d/redis</code></p>
-
-<p>脚本代码：</p>
-
-<pre><code class="language-shell">#chkconfig: 2345 10 90
-#description: Start and Stop redis
-PATH=/usr/local/bin:/sbin:/usr/bin:/bin #根据你的本机情况设定
- 
-REDISPORT=6379
-EXEC=/usr/local/bin/redis-server #根据你的本机情况设定
-REDIS_CLI=/usr/local/bin/redis-cli #根据你的本机情况设定
- 
-PIDFILE=/var/run/redis.pid #根据你的本机情况设定（这里要和redis.conf设置一致）
-CONF=&quot;/etc/redis.conf&quot; #根据你的本机情况设定
- 
-case &quot;$1&quot; in
-start)
-if [ -f $PIDFILE ]
-then
-echo &quot;$PIDFILE exists, process is already running or crashed&quot;
-else
-echo &quot;Starting Redis server...&quot;
-$EXEC $CONF
-fi
-if [ &quot;$?&quot;=&quot;0&quot; ]
-then
-echo &quot;Redis is running...&quot;
-fi
-;;
-stop)
-if [ ! -f $PIDFILE ]
-then
-echo &quot;$PIDFILE does not exist, process is not running&quot;
-else
-PID=$(cat $PIDFILE)
-echo &quot;Stopping ...&quot;
-$REDIS_CLI -p $REDISPORT SHUTDOWN
-while [ -x ${PIDFILE} ]
-do
-echo &quot;Waiting for Redis to shutdown ...&quot;
-sleep 1
-done
-echo &quot;Redis stopped&quot;
-fi
-;;
-restart|force-reload)
-${0} stop
-${0} start
-;;
-*)
-echo &quot;Usage: /etc/init.d/redis {start|stop|restart|force-reload}&quot; &gt;&amp;2
-exit 1
-esac
-</code></pre>
-
-<p>给启动脚本设定权限<br/>
-<code>chmod +x /etc/init.d/redis</code></p>
-
-<p>设置开机启动服务(centos 6.5)<br/>
-<code>sudo chkconfig redis on</code></p>
-
-<p>设置开机启动服务(centos 7)<br/>
-<code>vim /etc/rc.d/rc.local</code></p>
-
-<p>设置权限否则不会生效<br/>
-<code>chmod +x /etc/rc.d/rc.local</code></p>
-
-<h3 id="toc_3">到这里就配置完成了，开始使用redis吧</h3>
-
-<p>启动服务：<br/>
-<code>service redis start</code></p>
-
-<p>停止服务：<br/>
-<code>service redis stop</code></p>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2016/1/4</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='deploy.html'>开发&部署</a></span>
-          				  
-          					    <span class="posted-in"><a href='python.html'>python</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
                 <a class="clearlink" href="41.html">
                 
                   <h1>Python实现分布式爬虫</h1>
@@ -464,6 +329,12 @@ threading.Thread(target=do_work, args=(task, result)).start()
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="72.html">centos7安装与配置mongodb</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="62.html">MAC安装mogodb和redis</a>
