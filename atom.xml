@@ -4,13 +4,122 @@
   <title><![CDATA[王科的博客]]></title>
   <link href="http://wangke.pw/atom.xml" rel="self"/>
   <link href="http://wangke.pw/"/>
-  <updated>2016-01-04T11:31:53+08:00</updated>
+  <updated>2016-01-04T11:33:49+08:00</updated>
   <id>http://wangke.pw/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[centos7 安装与配置 redis]]></title>
+    <link href="http://wangke.pw/14518786127589.html"/>
+    <updated>2016-01-04T11:36:52+08:00</updated>
+    <id>http://wangke.pw/14518786127589.html</id>
+    <content type="html"><![CDATA[
+<h3 id="toc_0">一、安装</h3>
+
+<p>命令<code>yum install redis</code>安装很方便</p>
+
+<h3 id="toc_1">二、初始化常用配置</h3>
+
+<p>yum安装后默认配置文件在<code>/etc/redis.conf</code></p>
+
+<p>使用daemon方式运行程序，默认为非daemon方式运行<br/>
+<code>daemonize yes</code></p>
+
+<p>为了速度我挂载了固态硬盘来为redis做持久化，所以要配置下持久化的路径<br/>
+<code>dbfilename dump.rdb</code> #SNAPSHOTTING的文件名<br/>
+<code>dir /opt/data/redis/</code> #SNAPSHOTTING文件的路径</p>
+
+<p>设置为警告日志记录，减少日质量<br/>
+<code>loglevel warning</code></p>
+
+<p>注释掉本地IP绑定，开启外网访问<br/>
+<code># bind 127.0.0.1</code></p>
+
+<p>添加requirepass设置连接密码<br/>
+<code>requirepass ***（你的密码）</code></p>
+
+<h3 id="toc_2">三、编写启动脚本</h3>
+
+<p>输入命令<br/>
+<code>vim /etc/init.d/redis</code><br/>
+脚本代码：<br/>
+```shell<br/>
+#chkconfig: 2345 10 90<br/>
+#description: Start and Stop redis<br/>
+PATH=/usr/local/bin:/sbin:/usr/bin:/bin #根据你的本机情况设定</p>
+
+<p>REDISPORT=6379<br/>
+EXEC=/usr/local/bin/redis-server #根据你的本机情况设定<br/>
+REDIS_CLI=/usr/local/bin/redis-cli #根据你的本机情况设定</p>
+
+<p>PIDFILE=/var/run/redis.pid #根据你的本机情况设定（这里要和redis.conf设置一致）<br/>
+CONF=<q>/etc/redis.conf</q> #根据你的本机情况设定</p>
+
+<p>case <q>$1</q> in<br/>
+start)<br/>
+if [ -f \(PIDFILE ]<br/>
+then<br/>
+echo &quot;\)PIDFILE exists, process is already running or crashed<q><br/>
+else<br/>
+echo</q>Starting Redis server...<q><br/>
+\(EXEC \)CONF<br/>
+fi<br/>
+if [</q>\(?&quot;=&quot;0&quot; ]<br/>
+then<br/>
+echo &quot;Redis is running...&quot;<br/>
+fi<br/>
+;;<br/>
+stop)<br/>
+if [ ! -f \)PIDFILE ]<br/>
+then<br/>
+echo <q>$PIDFILE does not exist, process is not running</q><br/>
+else<br/>
+PID=$(cat \(PIDFILE)<br/>
+echo &quot;Stopping ...&quot;<br/>
+\$REDIS_CLI -p \)REDISPORT SHUTDOWN<br/>
+while [ -x \({PIDFILE} ]<br/>
+do<br/>
+echo &quot;Waiting for Redis to shutdown ...&quot;<br/>
+sleep 1<br/>
+done<br/>
+echo &quot;Redis stopped&quot;<br/>
+fi<br/>
+;;<br/>
+restart|force-reload)<br/>
+\){0} stop<br/>
+${0} start<br/>
+;;<br/>
+*)<br/>
+echo <q>Usage: /etc/init.d/redis {start|stop|restart|force-reload}</q> &gt;&amp;2<br/>
+exit 1<br/>
+esac<br/>
+``<code><br/>
+给启动脚本设定权限<br/>
+</code>chmod +x /etc/init.d/redis`</p>
+
+<p>设置开机启动服务(centos 6.5)<br/>
+<code>sudo chkconfig redis on</code></p>
+
+<p>设置开机启动服务(centos 7)<br/>
+<code>vim /etc/rc.d/rc.local</code></p>
+
+<p>设置权限否则不会生效<br/>
+<code>chmod +x /etc/rc.d/rc.local</code></p>
+
+<h3 id="toc_3">到这里就配置完成了</h3>
+
+<p>启动服务：<br/>
+<code>service redis start</code></p>
+
+<p>停止服务：<br/>
+<code>service redis stop</code></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python实现分布式爬虫]]></title>

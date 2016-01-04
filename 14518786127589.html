@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Python实现分布式爬虫 - 王科的博客
+  centos7 安装与配置 redis - 王科的博客
   
   </title>
   
@@ -97,7 +97,7 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>Python实现分布式爬虫</h1>
+          <h1>centos7 安装与配置 redis</h1>
      
         <div class="read-more clearfix">
           <span class="date">2016/1/4</span>
@@ -117,139 +117,105 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>最近在做一个项目，涉及到几亿数据的采集和分析，单机采集在内存和宽带遇到了瓶颈，所以尝试实现分布式采集。本文仅做一个简单的分布式采集demo，主要是讲讲实现思路和用到的技术要点。</p>
+      <h3 id="toc_0">一、安装</h3>
 
-<p>分布式采集实现的目标是有一台master服务器负责分派及跟踪任务，而worker客户机则可以是若干台，随着业务量的增长可以弹性扩充。（也可以称为master-slave模式）</p>
+<p>命令<code>yum install redis</code>安装很方便</p>
 
-<h3 id="toc_0">使用Python实现分布式爬虫所依赖到的包如下：</h3>
+<h3 id="toc_1">二、初始化常用配置</h3>
 
-<ul>
-<li>multiprocessing.managers：进程管理，并可以把进程分布到网络中，实现分布式的核心组件</li>
-<li>Queue：线程安全的队列，用于任务分派和任务跟踪</li>
-<li>threading：多线程操作</li>
-<li>requests：http请求库，API简单，比较好用</li>
-</ul>
+<p>yum安装后默认配置文件在<code>/etc/redis.conf</code></p>
 
-<h3 id="toc_1">master服务器代码：</h3>
+<p>使用daemon方式运行程序，默认为非daemon方式运行<br/>
+<code>daemonize yes</code></p>
 
-<pre><code class="language-python"># -*- coding: utf-8 -*-
-__author__ = &#39;Colin&#39;
- 
-import Queue, time, threading
-from multiprocessing.managers import BaseManager
- 
-class SpiderManager(BaseManager):
-    pass
- 
-# 任务分布队列 （工作机获取任务队列的网址进行爬取）
-task_queue = Queue.Queue()
-# 结果接受队列
-result_queue = Queue.Queue()
- 
-# 将两个队列注册到网络
-SpiderManager.register(&#39;task_queue&#39;, callable=lambda: task_queue)
-SpiderManager.register(&#39;result_queue&#39;, callable=lambda: result_queue)
- 
-# 设定服务器信息
-manager = SpiderManager(address=(&#39;127.0.0.1&#39;, 3838), authkey=&#39;hellokey&#39;)
-# 启动服务器
-manager.start()
-# 获取网络上的任务队列
-task = manager.task_queue()
-result = manager.result_queue()
- 
-# 预设运行信息
-start_time = time.time()
-spider_count = 0
- 
-# 模拟分配任务，每间隔10秒分配100条网址给工作机
-def allot_work(task):
-    while True:
-        x = range(100)
-        for i in x:
-            task.put(&#39;http://www.baidu.com/&#39;)
-        print &#39;任务分配成功，当前任务数：&#39;, task.qsize()
-        # 每间隔1秒分配一次任务
-        time.sleep(3)
- 
-# 获取工作机任务执行结果
-def get_result(result, start_time, spider_count):
-    while True:
-        if result.empty() == False:
-            r = result.get(timeout=3)
-            spider_count += 1
-            print &#39;{0} 耗时{1} 执行了{2}次爬虫任务&#39;.format(r, time.time() - start_time, spider_count)
-        else:
-            # 如果没有执行结果，休息5秒钟
-            time.sleep(5)
- 
-print &#39;开始执行任务分配……&#39;
-# 启动任务分配线程
-threading.Thread(target=allot_work, args=(task,)).start()
- 
-print &#39;开始接收任务执行结果……&#39;
-# 启动任务结果接收线程
-threading.Thread(target=get_result, args=(result, start_time, spider_count)).start()
-</code></pre>
+<p>为了速度我挂载了固态硬盘来为redis做持久化，所以要配置下持久化的路径<br/>
+<code>dbfilename dump.rdb</code> #SNAPSHOTTING的文件名<br/>
+<code>dir /opt/data/redis/</code> #SNAPSHOTTING文件的路径</p>
 
-<h3 id="toc_2">worker客户机代码：</h3>
+<p>设置为警告日志记录，减少日质量<br/>
+<code>loglevel warning</code></p>
 
-<pre><code class="language-python"># -*- coding: utf-8 -*-
-__author__ = &#39;Colin&#39;
- 
-import time, Queue, requests, threading, uuid
-from multiprocessing.managers import BaseManager
- 
-# 创建和服务器一致的SpiderManager
-class SpiderManager(BaseManager):
-    pass
- 
-# 模拟一个唯一的机器名字用于服务器区分
-host = uuid.uuid4()
- 
-# 客户端只需要通过名字注册网络上的Queue
-SpiderManager.register(&#39;task_queue&#39;)
-SpiderManager.register(&#39;result_queue&#39;)
- 
-# 配置服务器信息，和服务器配置保持一致
-server_addr = (&#39;127.0.0.1&#39;, 3838)
-manager = SpiderManager(address=server_addr, authkey=&#39;hellokey&#39;)
- 
-# 连接服务器
-manager.connect()
-print &#39;服务器连接成功……&#39;
- 
-# 获取网络上的队列对象
-task = manager.task_queue()
-result = manager.result_queue()
- 
-# 执行任务，并把任务执行结果返回给服务器
-def do_work(task, result):
-    while True:
-        try:
-            if task.empty() == False:
-                # 获取任务
-                url = task.get()
-                print &#39;获取任务成功，当前任务数：&#39;,task.qsize()
-                # 爬取网页
-                html = requests.get(url)
-                # 将执行结果返回给服务器
-                r_str = &#39;host:{0} &amp; status_code:{1}&#39;.format(host, html.status_code)
-                print r_str
-                result.put(r_str)
-            else:
-                # 如果没有接受到任务则休眠5秒
-                time.sleep(5)
-        except Exception as e:
-            r_str = &#39;host:{0} &amp; error:{1}&#39;.format(host, e.message)
-            print(r_str)
-            result.put(r_str)
- 
-print &#39;开始执行任务……&#39;
-threading.Thread(target=do_work, args=(task, result)).start()
-</code></pre>
+<p>注释掉本地IP绑定，开启外网访问<br/>
+<code># bind 127.0.0.1</code></p>
 
-<p>到这里一个简易的分布式爬虫系统就实现了，一台服务器运行manager.py，N台服务器运行worker.py即可，每启动一台worker会自动注册到manager，也就可以弹性扩展了。根据我本机测试，10台worker每秒请求量可达26次（这里是有宽带瓶颈的），需要提高请求量只需要增加更多的worker客户机。</p>
+<p>添加requirepass设置连接密码<br/>
+<code>requirepass ***（你的密码）</code></p>
+
+<h3 id="toc_2">三、编写启动脚本</h3>
+
+<p>输入命令<br/>
+<code>vim /etc/init.d/redis</code><br/>
+脚本代码：<br/>
+```shell<br/>
+#chkconfig: 2345 10 90<br/>
+#description: Start and Stop redis<br/>
+PATH=/usr/local/bin:/sbin:/usr/bin:/bin #根据你的本机情况设定</p>
+
+<p>REDISPORT=6379<br/>
+EXEC=/usr/local/bin/redis-server #根据你的本机情况设定<br/>
+REDIS_CLI=/usr/local/bin/redis-cli #根据你的本机情况设定</p>
+
+<p>PIDFILE=/var/run/redis.pid #根据你的本机情况设定（这里要和redis.conf设置一致）<br/>
+CONF=<q>/etc/redis.conf</q> #根据你的本机情况设定</p>
+
+<p>case <q>$1</q> in<br/>
+start)<br/>
+if [ -f \(PIDFILE ]<br/>
+then<br/>
+echo &quot;\)PIDFILE exists, process is already running or crashed<q><br/>
+else<br/>
+echo</q>Starting Redis server...<q><br/>
+\(EXEC \)CONF<br/>
+fi<br/>
+if [</q>\(?&quot;=&quot;0&quot; ]<br/>
+then<br/>
+echo &quot;Redis is running...&quot;<br/>
+fi<br/>
+;;<br/>
+stop)<br/>
+if [ ! -f \)PIDFILE ]<br/>
+then<br/>
+echo <q>$PIDFILE does not exist, process is not running</q><br/>
+else<br/>
+PID=$(cat \(PIDFILE)<br/>
+echo &quot;Stopping ...&quot;<br/>
+\$REDIS_CLI -p \)REDISPORT SHUTDOWN<br/>
+while [ -x \({PIDFILE} ]<br/>
+do<br/>
+echo &quot;Waiting for Redis to shutdown ...&quot;<br/>
+sleep 1<br/>
+done<br/>
+echo &quot;Redis stopped&quot;<br/>
+fi<br/>
+;;<br/>
+restart|force-reload)<br/>
+\){0} stop<br/>
+${0} start<br/>
+;;<br/>
+*)<br/>
+echo <q>Usage: /etc/init.d/redis {start|stop|restart|force-reload}</q> &gt;&amp;2<br/>
+exit 1<br/>
+esac<br/>
+``<code><br/>
+给启动脚本设定权限<br/>
+</code>chmod +x /etc/init.d/redis`</p>
+
+<p>设置开机启动服务(centos 6.5)<br/>
+<code>sudo chkconfig redis on</code></p>
+
+<p>设置开机启动服务(centos 7)<br/>
+<code>vim /etc/rc.d/rc.local</code></p>
+
+<p>设置权限否则不会生效<br/>
+<code>chmod +x /etc/rc.d/rc.local</code></p>
+
+<h3 id="toc_3">到这里就配置完成了</h3>
+
+<p>启动服务：<br/>
+<code>service redis start</code></p>
+
+<p>停止服务：<br/>
+<code>service redis stop</code></p>
 
       </div>
 
@@ -257,16 +223,13 @@ threading.Thread(target=do_work, args=(task, result)).start()
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14518786127589.html" 
-          title="Previous Post: centos7 安装与配置 redis">&laquo; centos7 安装与配置 redis</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="about.html" 
-          title="Next Post: 关于王科">关于王科 &raquo;</a>
+          <a  href="41.html" 
+          title="Next Post: Python实现分布式爬虫">Python实现分布式爬虫 &raquo;</a>
       
       </p>
         </div>
