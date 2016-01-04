@@ -144,61 +144,63 @@
 <h3 id="toc_2">三、编写启动脚本</h3>
 
 <p>输入命令<br/>
-<code>vim /etc/init.d/redis</code><br/>
-脚本代码：<br/>
-```shell<br/>
-#chkconfig: 2345 10 90<br/>
-#description: Start and Stop redis<br/>
-PATH=/usr/local/bin:/sbin:/usr/bin:/bin #根据你的本机情况设定</p>
+<code>vim /etc/init.d/redis</code></p>
 
-<p>REDISPORT=6379<br/>
-EXEC=/usr/local/bin/redis-server #根据你的本机情况设定<br/>
-REDIS_CLI=/usr/local/bin/redis-cli #根据你的本机情况设定</p>
+<p>脚本代码：</p>
 
-<p>PIDFILE=/var/run/redis.pid #根据你的本机情况设定（这里要和redis.conf设置一致）<br/>
-CONF=<q>/etc/redis.conf</q> #根据你的本机情况设定</p>
+<pre><code class="language-shell">#chkconfig: 2345 10 90
+#description: Start and Stop redis
+PATH=/usr/local/bin:/sbin:/usr/bin:/bin #根据你的本机情况设定
+ 
+REDISPORT=6379
+EXEC=/usr/local/bin/redis-server #根据你的本机情况设定
+REDIS_CLI=/usr/local/bin/redis-cli #根据你的本机情况设定
+ 
+PIDFILE=/var/run/redis.pid #根据你的本机情况设定（这里要和redis.conf设置一致）
+CONF=&quot;/etc/redis.conf&quot; #根据你的本机情况设定
+ 
+case &quot;$1&quot; in
+start)
+if [ -f $PIDFILE ]
+then
+echo &quot;$PIDFILE exists, process is already running or crashed&quot;
+else
+echo &quot;Starting Redis server...&quot;
+$EXEC $CONF
+fi
+if [ &quot;$?&quot;=&quot;0&quot; ]
+then
+echo &quot;Redis is running...&quot;
+fi
+;;
+stop)
+if [ ! -f $PIDFILE ]
+then
+echo &quot;$PIDFILE does not exist, process is not running&quot;
+else
+PID=$(cat $PIDFILE)
+echo &quot;Stopping ...&quot;
+$REDIS_CLI -p $REDISPORT SHUTDOWN
+while [ -x ${PIDFILE} ]
+do
+echo &quot;Waiting for Redis to shutdown ...&quot;
+sleep 1
+done
+echo &quot;Redis stopped&quot;
+fi
+;;
+restart|force-reload)
+${0} stop
+${0} start
+;;
+*)
+echo &quot;Usage: /etc/init.d/redis {start|stop|restart|force-reload}&quot; &gt;&amp;2
+exit 1
+esac
+</code></pre>
 
-<p>case <q>$1</q> in<br/>
-start)<br/>
-if [ -f \(PIDFILE ]<br/>
-then<br/>
-echo &quot;\)PIDFILE exists, process is already running or crashed<q><br/>
-else<br/>
-echo</q>Starting Redis server...<q><br/>
-\(EXEC \)CONF<br/>
-fi<br/>
-if [</q>\(?&quot;=&quot;0&quot; ]<br/>
-then<br/>
-echo &quot;Redis is running...&quot;<br/>
-fi<br/>
-;;<br/>
-stop)<br/>
-if [ ! -f \)PIDFILE ]<br/>
-then<br/>
-echo <q>$PIDFILE does not exist, process is not running</q><br/>
-else<br/>
-PID=$(cat \(PIDFILE)<br/>
-echo &quot;Stopping ...&quot;<br/>
-\$REDIS_CLI -p \)REDISPORT SHUTDOWN<br/>
-while [ -x \({PIDFILE} ]<br/>
-do<br/>
-echo &quot;Waiting for Redis to shutdown ...&quot;<br/>
-sleep 1<br/>
-done<br/>
-echo &quot;Redis stopped&quot;<br/>
-fi<br/>
-;;<br/>
-restart|force-reload)<br/>
-\){0} stop<br/>
-${0} start<br/>
-;;<br/>
-*)<br/>
-echo <q>Usage: /etc/init.d/redis {start|stop|restart|force-reload}</q> &gt;&amp;2<br/>
-exit 1<br/>
-esac<br/>
-``<code><br/>
-给启动脚本设定权限<br/>
-</code>chmod +x /etc/init.d/redis`</p>
+<p>给启动脚本设定权限<br/>
+<code>chmod +x /etc/init.d/redis</code></p>
 
 <p>设置开机启动服务(centos 6.5)<br/>
 <code>sudo chkconfig redis on</code></p>
@@ -209,7 +211,7 @@ esac<br/>
 <p>设置权限否则不会生效<br/>
 <code>chmod +x /etc/rc.d/rc.local</code></p>
 
-<h3 id="toc_3">到这里就配置完成了</h3>
+<h3 id="toc_3">到这里就配置完成了，开始使用redis吧</h3>
 
 <p>启动服务：<br/>
 <code>service redis start</code></p>
