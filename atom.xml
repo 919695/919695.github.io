@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[王科的博客]]></title>
+  <link href="http://wangke.pw/atom.xml" rel="self"/>
+  <link href="http://wangke.pw/"/>
+  <updated>2016-01-04T11:01:58+08:00</updated>
+  <id>http://wangke.pw/</id>
+  <author>
+    <name><![CDATA[]]></name>
+    
+  </author>
+  <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[关于王科]]></title>
+    <link href="http://wangke.pw/about.html"/>
+    <updated>2016-01-04T09:43:17+08:00</updated>
+    <id>http://wangke.pw/about.html</id>
+    <content type="html"><![CDATA[
+<p>王科，国内首批O2O实践者、O2O解决方案专家。擅长SEO、网络推广、网络营销、软件开发。从事过个人站长、创业做过电商、自学编程并成立了专业的SEO软件开发公司。同时是国内最早一批研究微信应用开发和微信营销的实战者。</p>
+
+<p><img src="media/14518717975689/14518723413221.jpg" alt=""/></p>
+
+]]></content>
+  </entry>
+  
+</feed>
