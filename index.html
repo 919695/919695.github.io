@@ -165,14 +165,14 @@
 <p>在GITHUB桌面版官网<a href="https://desktop.github.com/">https://desktop.github.com/</a>下载适合你操作系统的客户端，我自己用的是MAC OS，而在后面的教程中，还会用WIN7虚拟机配合演示。安装过程非常简单，这里就不赘述了。<br/>
 安装完成后启动GITHUB客户端会提示登录，输入你的GITHUB账号和密码登录即可。</p>
 
-<h3 id="toc_3">Step3. 克隆GITHUB账户中的仓库</h3>
+<h3 id="toc_3">Step4. 克隆GITHUB账户中的仓库</h3>
 
 <p>启动并登录GITHUB客户端后，点击客户端左上角<code>+</code>会提示3个选项，分别是Add、Create、Clone，Add是指添加一个本地的GIT仓库到GITHUB客户端，Create是指创建一个新的GIT仓库，Clone是指从GITHUB账户中克隆项目到本地，我们选择Clone。<br/>
 <img src="media/14518875094817/14518935495973.jpg" alt=""/></p>
 
 <p>确定Clone后，GITHUB会提示选择一个本地目录，根据实际选择后确定即可。</p>
 
-<h3 id="toc_4">Step4. 创建和提交版本</h3>
+<h3 id="toc_4">Step5. 创建和提交版本</h3>
 
 <ol>
 <li><p>在GITHUG客户端左侧仓库列表选择我们刚刚Clone的仓库playgit，并右键单击，再选择<code>Open in Finder</code>，接下来就可以自由的在这个目录下创建或修改的任意文件了。<br/>
@@ -207,9 +207,9 @@ GITHUB是一个很棒的平台</p>
 <img src="media/14518875094817/14518954047560.jpg" alt=""/></li>
 </ol>
 
-<h3 id="toc_5">Step5. 版本回滚</h3>
+<h3 id="toc_5">Step6. 版本回滚</h3>
 
-<p>通过Step4的方法我们进行几次版本提交来创建多个版本历史<br/>
+<p>通过Step5的方法我们进行几次版本提交来创建多个版本历史<br/>
 <img src="media/14518875094817/14519016621910.jpg" alt=""/></p>
 
 <p>当我们提交了多个版本后，发现有问题，需要回到之前某个版本，那么就需要版本回滚。</p>
@@ -231,7 +231,7 @@ GITHUB是一个很棒的平台</p>
 <img src="media/14518875094817/14519044806194.jpg" alt=""/><br/>
 我们在本地仓库打开README.md文件也可以看到<code>GITHUB是一个非常棒的平台</code>这句话不存在了，因为被回滚了。</p>
 
-<h3 id="toc_6">Step6. 协同工作与解决版本冲突</h3>
+<h3 id="toc_6">Step7. 协同工作与解决版本冲突</h3>
 
 <p>前面的操作我们都是自己一个人在进行，现在我们就开始团队协作吧。我在虚拟机（WINDOWS7系统）里也安装了GITHUB客户端，并登录了另外一个wwk1986账户（在Step2添加的团队成员）。<br/>
 点击客户端的<code>+</code>按钮Clone playgit<br/>
@@ -252,53 +252,35 @@ GITHUB是一个很棒的平台</p>
 绿色取款显示了本次冲突中增加的内容</p>
 
 <p>而解决冲突的方法很简单，就是我们重新编辑README.md文件，手动删除GITHUB为我们添加的冲突注释，并确定最终完成的版本。这里我选择了把2个人添加的内容都保留<br/>
-冲突内容：<br/>
-```</p>
+冲突内容：</p>
 
-<h1 id="toc_7">playgit</h1>
+<pre><code># playgit
+不使用命令玩转GITHUB的演示项目
 
-<p>不使用命令玩转GITHUB的演示项目</p>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+我学会了GITHUB客户端操作
+=======
+学会了真的很简单。
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; origin/master
+</code></pre>
 
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<p>修改后的内容：</p>
 
-<h1 id="toc_8">我学会了GITHUB客户端操作</h1>
+<pre><code># playgit
+不使用命令玩转GITHUB的演示项目
 
-<p>学会了真的很简单。</p>
+学会了真的很简单。
 
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>origin/master<br/>
-<code><br/>
-修改后的内容：<br/>
-</code></p>
+我学会了GITHUB客户端操作
+</code></pre>
 
-<h1 id="toc_9">playgit</h1>
-
-<p>不使用命令玩转GITHUB的演示项目</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-
-<p>学会了真的很简单。</p>
-
-<p>我学会了GITHUB客户端操作<br/>
-```<br/>
-修改后保存回到GITHUB客户端看到可以提交版本变更了<br/>
+<p>修改后保存回到GITHUB客户端看到可以提交版本变更了<br/>
 <img src="media/14518875094817/14519062054765.jpg" alt=""/></p>
 
 <p>既然已经合并了版本，那么我们直接提交这个版本，回到仓库视图，选择刚刚提交的版本，仍然可以看到合并前的冲突内容。（下图是另一次版本冲突）<br/>
 <img src="media/14518875094817/14519069509118.jpg" alt=""/></p>
 
-<p>解决了版本冲突后记得提醒你的队友使用客户端进行一次同步，避免再次版本冲突。</p>
+<p>解决了版本冲突同步到服务器，并记得提醒你的队友使用客户端进行一次同步，避免再次版本冲突。</p>
 
 <p>到这里，你已经学会了使用GITHUB客户端和团队进行日常的协同开发，但是往往这还不能满足我们一些大型项目合作，因为一个大型项目往往会存在多个分支版本，那么我们将在下一篇教程介绍，GITHUB的分支操作。</p>
 
