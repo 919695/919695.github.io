@@ -4,7 +4,7 @@
   <title><![CDATA[王科的博客]]></title>
   <link href="http://wangke.pw/atom.xml" rel="self"/>
   <link href="http://wangke.pw/"/>
-  <updated>2016-01-04T11:25:32+08:00</updated>
+  <updated>2016-01-04T11:31:53+08:00</updated>
   <id>http://wangke.pw/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -14,9 +14,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python实现分布式爬虫]]></title>
-    <link href="http://wangke.pw/14518781716845.html"/>
+    <link href="http://wangke.pw/41.html"/>
     <updated>2016-01-04T11:29:31+08:00</updated>
-    <id>http://wangke.pw/14518781716845.html</id>
+    <id>http://wangke.pw/41.html</id>
     <content type="html"><![CDATA[
 <p>最近在做一个项目，涉及到几亿数据的采集和分析，单机采集在内存和宽带遇到了瓶颈，所以尝试实现分布式采集。本文仅做一个简单的分布式采集demo，主要是讲讲实现思路和用到的技术要点。</p>
 
