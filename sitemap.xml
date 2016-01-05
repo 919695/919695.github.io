@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>http://wangke.pw/</loc>
-  <lastmod>2016-01-04T21:26:57+08:00</lastmod>
+  <lastmod>2016-01-05T09:24:32+08:00</lastmod>
 </url>
 
 <url>
@@ -21,11 +21,6 @@
 </url>
 
 <url>
-  <loc>http://wangke.pw/about.html</loc>
-  <lastmod>2015-10-13T09:43:17+08:00</lastmod>
-</url>
-
-<url>
   <loc>http://wangke.pw/52.html</loc>
   <lastmod>2015-08-23T11:36:52+08:00</lastmod>
 </url>
@@ -35,6 +30,11 @@
   <lastmod>2015-07-20T11:29:31+08:00</lastmod>
 </url>
 
+
+<url>
+  <loc>http://wangke.pw/about.html</loc>
+  <lastmod>2016-01-04T11:24:53+08:00</lastmod>
+</url>
 
 
 <url>

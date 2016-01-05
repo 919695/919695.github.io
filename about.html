@@ -92,34 +92,19 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		var currentURL = 'about.html';
+		currentURL = currentURL.substr(0,currentURL.length-5);
+		$('#menu_item_'+currentURL).addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>关于王科</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2015/10/13</span>
 
-          
-           
-         
-          <span class="comments">
-            
+    <div id="single-page-wrap">
+        <h1>关于王科</h1>
 
-            
-          </span>
-
-        </div>
-      </div><!-- article -->
-
-      <div class="article-content">
-      <p><center><br/>
+        <div class="markdown-body post-page">
+        <p><center><br/>
 <img src="media/14518717975689/14518772524638.jpg" alt="“王科的照片”"/><br/>
 </center></p>
 
@@ -146,140 +131,9 @@
 <center/></p>
 </blockquote>
 
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="62.html" 
-          title="Previous Post: MAC安装mogodb和redis">&laquo; MAC安装mogodb和redis</a>
-      
-        </p>
         </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="52.html" 
-          title="Next Post: centos7安装与配置redis">centos7安装与配置redis &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          <!--高速版-->
-<div id="SOHUCS"></div>
-<script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
-<script type="text/javascript">
-    window.changyan.api.config({
-        appid: 'cys1GtSja',
-        conf: 'prod_b7fe656170add817234ade4ea8c7afaf'
-    });
-</script>        
-
-          
-
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
-
-
-
-
- <div class="large-4 medium-4 columns">
-  <div class="hide-for-small">
-    <div id="sidebar" class="sidebar">
-          <div id="site-info" class="site-info">
-            
-                <h1>王科的博客</h1>
-                <div class="site-des">SEO、大数据、Python</div>
-                <div class="social">
-
-
-
-
-
-
-
-
-
-
-
-  <a class="rss" href="atom.xml" title="RSS">RSS</a>
-                
-              	 </div>
-          	</div>
-              <div id="site-categories" class="side-item ">
-                <div class="side-header">
-                  <h2>Categories</h2>
-                </div>
-                <div class="side-content">
-
-      	<p class="cat-list">
-        
-            <a href="python.html"><strong>python</strong></a>
-        
-            <a href="deploy.html"><strong>开发&部署</strong></a>
-        
-            <a href="other.html"><strong>杂记</strong></a>
-         
-        </p>
-
-
-                </div>
-              </div>
-
-              <div id="site-categories" class="side-item">
-                <div class="side-header">
-                  <h2>Recent Posts</h2>
-                </div>
-                <div class="side-content">
-                <ul class="posts-list">
-	      
-		      
-			      <li class="post">
-			        <a href="github1.html">不用命令玩转GITHUB（一）</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="72.html">centos7安装与配置mongodb</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="62.html">MAC安装mogodb和redis</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="about.html">关于王科</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="52.html">centos7安装与配置redis</a>
-			      </li>
-		     
-		  
-		      
-		   
-		  		</ul>
-                </div>
-              </div>
-        </div><!-- sidebar -->
-      </div><!-- hide for small -->
-</div><!-- large 4 -->
-
-</div><!-- row -->
-
+    </div>
+</div>              
  <div class="page-bottom clearfix">
   <div class="row">
    <p class="copyright">Copyright &copy; 2016-2018
